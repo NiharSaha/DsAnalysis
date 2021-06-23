@@ -2,7 +2,6 @@
 // Ntuplt creator for D meson related analysis.
 // Maintain and contact: ta-wei wang
 // Email: "tawei@mit.edu" or "ta-wei.wang@cern.ch"
-// Author:
 //*************************************************
 
 #include "FWCore/ServiceRegistry/interface/Service.h"
