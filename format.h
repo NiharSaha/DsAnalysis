@@ -59,8 +59,8 @@
 
 #define ELECTRON_MASS 0.0005
 #define MUON_MASS   0.10565837
-#define PION_MASS   0.13957018
-#define KAON_MASS   0.493677
+#define PION_MASS   0.13957018//interest
+#define KAON_MASS   0.493677//interest
 #define KSHORT_MASS 0.497614
 #define KSTAR_MASS  0.89594
 #define PHI_MASS    1.019455
@@ -91,7 +91,7 @@
 #define BSUBS_PDGID 531
 #define DZERO_PDGID 421
 #define DPLUS_PDGID 411
-#define DSUBS_PDGID 431
+#define DSUBS_PDGID 431//interest
 #define DSTAR_PDGID 413
 #define F0980_PDGID 9010221
 #define PROTON_PDGID 2212
@@ -104,153 +104,146 @@
 #define PSI2S_PDGID 100443
 
 
-class EvtInfoBranches{ 
- public:
-  int	    RunNo;
-  int	    EvtNo;
-  int	    BxNo;
-  int	    LumiNo;
-  int	    Orbit;
-  bool	McFlag;
-  int     nBX;
-  int     BXPU[MAX_BX];
-  int     nPU[MAX_BX];
-  float   trueIT[MAX_BX];
-  //int     trgCount;                   //number of successfully triggered HLT path in the booking.
-  //int     nTrgBook;                   //N_TRIGGER_BOOKING
-  //char    trgBook[N_TRIGGER_BOOKINGS];//status of booked triggers
-  //int 	nHLT;                       //# of HLT of the event 
-  //bool    hltBits[N_TRIGGER_BOOKINGS];//is HLT of the event acceptted?
-  //std::vector<std::string> *hltnames;
-  //bool	hltflag[N_TRIGGER_NAMES]; //status of HLT
-  //int	nHLTm; //# of HLT hope to be matched
-  //char	hltflagm[N_TRIGGER_NAMES]; //status of HLT hope to be matched
+class EvtInfoBranches{ //{{{
+	public:
+            int	    RunNo;
+	    int	    EvtNo;
+	    int     CentBin;
+	    int	    BxNo;
+	    int	    LumiNo;
+	    int	    Orbit;
+	    bool	McFlag;
+        int     nBX;
+        int     BXPU[MAX_BX];
+        int     nPU[MAX_BX];
+        float   trueIT[MAX_BX];
+        //int     trgCount;                   //number of successfully triggered HLT path in the booking.
+        //int     nTrgBook;                   //N_TRIGGER_BOOKING
+        //char    trgBook[N_TRIGGER_BOOKINGS];//status of booked triggers
+		//int 	nHLT;                       //# of HLT of the event 
+        //bool    hltBits[N_TRIGGER_BOOKINGS];//is HLT of the event acceptted?
+		//std::vector<std::string> *hltnames;
+		//bool	hltflag[N_TRIGGER_NAMES]; //status of HLT
+		//int	nHLTm; //# of HLT hope to be matched
+		//char	hltflagm[N_TRIGGER_NAMES]; //status of HLT hope to be matched
+		float	PVx;
+		float	PVy;
+		float	PVz;
+		float	PVxE;
+		float	PVyE;
+		float	PVzE;
+		float	PVnchi2;
+		float	PVchi2;
+        float  BSx;
+        float  BSy;
+        float  BSz;
+        float  BSxErr;
+        float  BSyErr;
+        float  BSzErr;
+        float  BSdxdz;
+        float  BSdydz;
+        float  BSdxdzErr;
+        float  BSdydzErr;
+        float  BSWidthX;
+        float  BSWidthXErr;
+        float  BSWidthY;
+        float  BSWidthYErr;
+		//float	PVc2p;
+		
+		void regTree(TTree *root){//{{{
+			root->Branch("EvtInfo.RunNo"        , &RunNo                     , "EvtInfo.RunNo/I"			);
+			root->Branch("EvtInfo.EvtNo"        , &EvtNo                     , "EvtInfo.EvtNo/I"			);
+			root->Branch("EvtInfo.CentBin"        , &CentBin                     , "EvtInfo.CentBin/I"                    );
+			root->Branch("EvtInfo.BxNo"         , &BxNo                      , "EvtInfo.BxNo/I"			);
+			root->Branch("EvtInfo.LumiNo"       , &LumiNo                    , "EvtInfo.LumiNo/I"			);
+			root->Branch("EvtInfo.Orbit"        , &Orbit                     , "EvtInfo.Orbit/I"			);
+			root->Branch("EvtInfo.McFlag"       , &McFlag                    , "EvtInfo.McFlag/O"			);
+			root->Branch("EvtInfo.nBX"          , &nBX                       , "EvtInfo.nBX/I" 			);
+			root->Branch("EvtInfo.BXPU"         , BXPU                       , "EvtInfo.BXPU[EvtInfo.nBX]/I");
+			root->Branch("EvtInfo.nPU"          , nPU                        , "EvtInfo.nPU[EvtInfo.nBX]/I");
+			root->Branch("EvtInfo.trueIT"       , trueIT                     , "EvtInfo.trueIT[EvtInfo.nBX]/F");
+            //root->Branch("EvtInfo.trgCount"     , &trgCount                  , "EvtInfo.trgCount/I"       );
+            //root->Branch("EvtInfo.nTrgBook"     , &nTrgBook                  , "EvtInfo.nTrgBook/I"       );
+            //root->Branch("EvtInfo.trgBook"      , trgBook                    , "EvtInfo.trgBook[EvtInfo.nTrgBook]/B");//notice /B
+			//root->Branch("EvtInfo.nHLT"         , &nHLT                      , "EvtInfo.nHLT/I"			);
+            //root->Branch("EvtInfo.hltBits"      , hltBits                    , "EvtInfo.hltBits[EvtInfo.nHLT]/O");
+			//root->Branch("EvtInfo.hltnames"   , "std::vector<std::string>" , &hltnames);
+			//root->Branch("EvtInfo.hltflag"    , hltflag                    , "EvtInfo.hltflag[EvtInfo.nHLT]/O"	);
+			//root->Branch("EvtInfo.nHLTm"      , &nHLTm                     , "EvtInfo.nHLTm/I"			);
+			//root->Branch("EvtInfo.hltflagm"   , hltflagm                   , "EvtInfo.hltflagm[nHLTm]/O"		);
+  		    root->Branch("EvtInfo.PVx"          , &PVx                       , "EvtInfo.PVx/F"			);
+  		    root->Branch("EvtInfo.PVy"          , &PVy                       , "EvtInfo.PVy/F"			);
+  		    root->Branch("EvtInfo.PVz"          , &PVz                       , "EvtInfo.PVz/F"			);
+            root->Branch("EvtInfo.PVxE"         , &PVxE                      , "EvtInfo.PVxE/F"           );
+            root->Branch("EvtInfo.PVyE"         , &PVyE                      , "EvtInfo.PVyE/F"           );
+            root->Branch("EvtInfo.PVzE"         , &PVzE                      , "EvtInfo.PVzE/F"           );
+  		    root->Branch("EvtInfo.PVnchi2"      , &PVnchi2                   , "EvtInfo.PVnchi2/F"		);
+  		    root->Branch("EvtInfo.PVchi2"       , &PVchi2                    , "EvtInfo.PVchi2/F"			);
+  		    root->Branch("EvtInfo.BSx"          , &BSx                       , "EvtInfo.BSx/F"			);
+  		    root->Branch("EvtInfo.BSy"          , &BSy                       , "EvtInfo.BSy/F"			);
+  		    root->Branch("EvtInfo.BSz"          , &BSz                       , "EvtInfo.BSz/F"			);
+  		    root->Branch("EvtInfo.BSxErr"       , &BSxErr                    , "EvtInfo.BSxErr/F"			);
+  		    root->Branch("EvtInfo.BSyErr"       , &BSyErr                    , "EvtInfo.BSyErr/F"			);
+  		    root->Branch("EvtInfo.BSzErr"       , &BSzErr                    , "EvtInfo.BSzErr/F"			);
+  		    root->Branch("EvtInfo.BSdxdz"       , &BSdxdz                    , "EvtInfo.BSdxdz/F"			);
+  		    root->Branch("EvtInfo.BSdydz"       , &BSdydz                    , "EvtInfo.BSdydz/F"			);
+  		    root->Branch("EvtInfo.BSdxdzErr"    , &BSdxdzErr                 , "EvtInfo.BSdxdzErr/F"	);
+  		    root->Branch("EvtInfo.BSdydzErr"    , &BSdydzErr                 , "EvtInfo.BSdydzErr/F"	);
+  		    root->Branch("EvtInfo.BSWidthX"     , &BSWidthX                  , "EvtInfo.BSWidthX/F"		);
+  		    root->Branch("EvtInfo.BSWidthXErr"  , &BSWidthXErr               , "EvtInfo.BSWidthXErr/F"	);
+  		    root->Branch("EvtInfo.BSWidthY"     , &BSWidthY                  , "EvtInfo.BSWidthY/F"		);
+  		    root->Branch("EvtInfo.BSWidthYErr"  , &BSWidthYErr               , "EvtInfo.BSWidthYErr/F"	);
+			//root->Branch("EvtInfo.PVc2p"      , &PVc2p                     , "EvtInfo.PVc2p/F"			);//
+		}//}}}
 
-  int centrality;
+    	void setbranchadd(TTree *root){ //{{{
+            root->SetBranchAddress("EvtInfo.RunNo"          ,&RunNo	    );
+            root->SetBranchAddress("EvtInfo.EvtNo"          ,&EvtNo       );
+            root->SetBranchAddress("EvtInfo.CentBin"          ,&CentBin       );
+	    root->SetBranchAddress("EvtInfo.BxNo"           ,&BxNo        );
+            root->SetBranchAddress("EvtInfo.LumiNo"         ,&LumiNo      );
+            root->SetBranchAddress("EvtInfo.Orbit"          ,&Orbit       );
+            root->SetBranchAddress("EvtInfo.McFlag"         ,&McFlag      );
+			root->SetBranchAddress("EvtInfo.nBX"            ,&nBX         );
+			root->SetBranchAddress("EvtInfo.BXPU"           ,BXPU         );
+			root->SetBranchAddress("EvtInfo.nPU"            ,nPU          );
+			root->SetBranchAddress("EvtInfo.trueIT"         ,trueIT       );
+            //root->SetBranchAddress("EvtInfo.trgCount"     ,&trgCount    );
+            //root->SetBranchAddress("EvtInfo.nTrgBook"     ,&nTrgBook    );
+            //root->SetBranchAddress("EvtInfo.trgBook"      ,trgBook      );
+            //root->SetBranchAddress("EvtInfo.nHLT"         ,&nHLT	    );
+            //root->SetBranchAddress("EvtInfo.hltBits"      ,hltBits      );
+            //root->SetBranchAddress("EvtInfo.hltnames"     ,&hltnames	);
+            //root->SetBranchAddress("EvtInfo.hltflag"      ,hltflag	);
+            //root->SetBranchAddress("EvtInfo.nHLTm"	    ,&nHLTm	);
+            //root->SetBranchAddress("EvtInfo.hltflagm"     ,hltflagm	);
+            root->SetBranchAddress("EvtInfo.PVx"            ,&PVx		);
+            root->SetBranchAddress("EvtInfo.PVy"            ,&PVy		);
+            root->SetBranchAddress("EvtInfo.PVz"            ,&PVz		);
+            root->SetBranchAddress("EvtInfo.PVxE"           ,&PVxE	);
+            root->SetBranchAddress("EvtInfo.PVyE"           ,&PVyE	);
+            root->SetBranchAddress("EvtInfo.PVzE"           ,&PVzE	);
+            root->SetBranchAddress("EvtInfo.PVnchi2"        ,&PVnchi2	);
+            root->SetBranchAddress("EvtInfo.PVchi2"         ,&PVchi2	);
+            root->SetBranchAddress("EvtInfo.BSx"            ,&BSx	    );
+            root->SetBranchAddress("EvtInfo.BSy"            ,&BSy	    );
+            root->SetBranchAddress("EvtInfo.BSz"            ,&BSz	    );
+            root->SetBranchAddress("EvtInfo.BSxErr"         ,&BSxErr  );
+            root->SetBranchAddress("EvtInfo.BSyErr"         ,&BSyErr  );
+            root->SetBranchAddress("EvtInfo.BSzErr"         ,&BSzErr  );
+            root->SetBranchAddress("EvtInfo.BSdxdz"         ,&BSdxdz  );
+            root->SetBranchAddress("EvtInfo.BSdydz"         ,&BSdydz  );
+            root->SetBranchAddress("EvtInfo.BSdxdzErr"      ,&BSdxdzErr  );
+            root->SetBranchAddress("EvtInfo.BSdydzErr"      ,&BSdydzErr  );
+            root->SetBranchAddress("EvtInfo.BSWidthX"       ,&BSWidthX  );
+            root->SetBranchAddress("EvtInfo.BSWidthXErr"    ,&BSWidthXErr  );
+            root->SetBranchAddress("EvtInfo.BSWidthY"       ,&BSWidthY  );
+            root->SetBranchAddress("EvtInfo.BSWidthYErr"    ,&BSWidthYErr  );
+            //root->SetBranchAddress("EvtInfo.PVc2p"    ,&PVc2p	);
+        } //}}}
+}; //}}}
 
-  float	PVx;
-  float	PVy;
-  float	PVz;
-  float	PVxE;
-  float	PVyE;
-  float	PVzE;
-  float	PVnchi2;
-  float	PVchi2;
-  float  BSx;
-  float  BSy;
-  float  BSz;
-  float  BSxErr;
-  float  BSyErr;
-  float  BSzErr;
-  float  BSdxdz;
-  float  BSdydz;
-  float  BSdxdzErr;
-  float  BSdydzErr;
-  float  BSWidthX;
-  float  BSWidthXErr;
-  float  BSWidthY;
-  float  BSWidthYErr;
-  //float	PVc2p;
-  
-  void regTree(TTree *root){
-    root->Branch("EvtInfo.RunNo"        , &RunNo                     , "EvtInfo.RunNo/I"			);
-    root->Branch("EvtInfo.EvtNo"        , &EvtNo                     , "EvtInfo.EvtNo/I"			);
-    root->Branch("EvtInfo.BxNo"         , &BxNo                      , "EvtInfo.BxNo/I"			);
-    root->Branch("EvtInfo.LumiNo"       , &LumiNo                    , "EvtInfo.LumiNo/I"			);
-    root->Branch("EvtInfo.Orbit"        , &Orbit                     , "EvtInfo.Orbit/I"			);
-    root->Branch("EvtInfo.McFlag"       , &McFlag                    , "EvtInfo.McFlag/O"			);
-    root->Branch("EvtInfo.nBX"          , &nBX                       , "EvtInfo.nBX/I" 			);
-    root->Branch("EvtInfo.BXPU"         , BXPU                       , "EvtInfo.BXPU[EvtInfo.nBX]/I");
-    root->Branch("EvtInfo.nPU"          , nPU                        , "EvtInfo.nPU[EvtInfo.nBX]/I");
-    root->Branch("EvtInfo.trueIT"       , trueIT                     , "EvtInfo.trueIT[EvtInfo.nBX]/F");
-    
-    //root->Branch("EvtInfo.centrality"   ,&centrality                  , "EvtInfo.centrality/I");
-
-
-    //root->Branch("EvtInfo.trgCount"     , &trgCount                  , "EvtInfo.trgCount/I"       );
-    //root->Branch("EvtInfo.nTrgBook"     , &nTrgBook                  , "EvtInfo.nTrgBook/I"       );
-    //root->Branch("EvtInfo.trgBook"      , trgBook                    , "EvtInfo.trgBook[EvtInfo.nTrgBook]/B");//notice /B
-    //root->Branch("EvtInfo.nHLT"         , &nHLT                      , "EvtInfo.nHLT/I"			);
-    //root->Branch("EvtInfo.hltBits"      , hltBits                    , "EvtInfo.hltBits[EvtInfo.nHLT]/O");
-    //root->Branch("EvtInfo.hltnames"   , "std::vector<std::string>" , &hltnames);
-    //root->Branch("EvtInfo.hltflag"    , hltflag                    , "EvtInfo.hltflag[EvtInfo.nHLT]/O"	);
-    //root->Branch("EvtInfo.nHLTm"      , &nHLTm                     , "EvtInfo.nHLTm/I"			);
-    //root->Branch("EvtInfo.hltflagm"   , hltflagm                   , "EvtInfo.hltflagm[nHLTm]/O"		);
-    root->Branch("EvtInfo.PVx"          , &PVx                       , "EvtInfo.PVx/F"			);
-    root->Branch("EvtInfo.PVy"          , &PVy                       , "EvtInfo.PVy/F"			);
-    root->Branch("EvtInfo.PVz"          , &PVz                       , "EvtInfo.PVz/F"			);
-    root->Branch("EvtInfo.PVxE"         , &PVxE                      , "EvtInfo.PVxE/F"           );
-    root->Branch("EvtInfo.PVyE"         , &PVyE                      , "EvtInfo.PVyE/F"           );
-    root->Branch("EvtInfo.PVzE"         , &PVzE                      , "EvtInfo.PVzE/F"           );
-    root->Branch("EvtInfo.PVnchi2"      , &PVnchi2                   , "EvtInfo.PVnchi2/F"		);
-    root->Branch("EvtInfo.PVchi2"       , &PVchi2                    , "EvtInfo.PVchi2/F"			);
-    root->Branch("EvtInfo.BSx"          , &BSx                       , "EvtInfo.BSx/F"			);
-    root->Branch("EvtInfo.BSy"          , &BSy                       , "EvtInfo.BSy/F"			);
-    root->Branch("EvtInfo.BSz"          , &BSz                       , "EvtInfo.BSz/F"			);
-    root->Branch("EvtInfo.BSxErr"       , &BSxErr                    , "EvtInfo.BSxErr/F"			);
-    root->Branch("EvtInfo.BSyErr"       , &BSyErr                    , "EvtInfo.BSyErr/F"			);
-    root->Branch("EvtInfo.BSzErr"       , &BSzErr                    , "EvtInfo.BSzErr/F"			);
-    root->Branch("EvtInfo.BSdxdz"       , &BSdxdz                    , "EvtInfo.BSdxdz/F"			);
-    root->Branch("EvtInfo.BSdydz"       , &BSdydz                    , "EvtInfo.BSdydz/F"			);
-    root->Branch("EvtInfo.BSdxdzErr"    , &BSdxdzErr                 , "EvtInfo.BSdxdzErr/F"	);
-    root->Branch("EvtInfo.BSdydzErr"    , &BSdydzErr                 , "EvtInfo.BSdydzErr/F"	);
-    root->Branch("EvtInfo.BSWidthX"     , &BSWidthX                  , "EvtInfo.BSWidthX/F"		);
-    root->Branch("EvtInfo.BSWidthXErr"  , &BSWidthXErr               , "EvtInfo.BSWidthXErr/F"	);
-    root->Branch("EvtInfo.BSWidthY"     , &BSWidthY                  , "EvtInfo.BSWidthY/F"		);
-    root->Branch("EvtInfo.BSWidthYErr"  , &BSWidthYErr               , "EvtInfo.BSWidthYErr/F"	);
-    //root->Branch("EvtInfo.PVc2p"      , &PVc2p                     , "EvtInfo.PVc2p/F"			);//
-  }
-
-  void setbranchadd(TTree *root){ 
-    root->SetBranchAddress("EvtInfo.RunNo"          ,&RunNo	    );
-    root->SetBranchAddress("EvtInfo.EvtNo"          ,&EvtNo       );
-    root->SetBranchAddress("EvtInfo.BxNo"           ,&BxNo        );
-    root->SetBranchAddress("EvtInfo.LumiNo"         ,&LumiNo      );
-    root->SetBranchAddress("EvtInfo.Orbit"          ,&Orbit       );
-    root->SetBranchAddress("EvtInfo.McFlag"         ,&McFlag      );
-    root->SetBranchAddress("EvtInfo.nBX"            ,&nBX         );
-    root->SetBranchAddress("EvtInfo.BXPU"           ,BXPU         );
-    root->SetBranchAddress("EvtInfo.nPU"            ,nPU          );
-    root->SetBranchAddress("EvtInfo.trueIT"         ,trueIT       );
-
-    //root->SetBranchAddress("EvtInfo.centrality"     ,&centrality   );
-
-    //root->SetBranchAddress("EvtInfo.trgCount"     ,&trgCount    );
-    //root->SetBranchAddress("EvtInfo.nTrgBook"     ,&nTrgBook    );
-    //root->SetBranchAddress("EvtInfo.trgBook"      ,trgBook      );
-    //root->SetBranchAddress("EvtInfo.nHLT"         ,&nHLT	    );
-    //root->SetBranchAddress("EvtInfo.hltBits"      ,hltBits      );
-    //root->SetBranchAddress("EvtInfo.hltnames"     ,&hltnames	);
-    //root->SetBranchAddress("EvtInfo.hltflag"      ,hltflag	);
-    //root->SetBranchAddress("EvtInfo.nHLTm"	    ,&nHLTm	);
-    //root->SetBranchAddress("EvtInfo.hltflagm"     ,hltflagm	);
-    root->SetBranchAddress("EvtInfo.PVx"            ,&PVx		);
-    root->SetBranchAddress("EvtInfo.PVy"            ,&PVy		);
-    root->SetBranchAddress("EvtInfo.PVz"            ,&PVz		);
-    root->SetBranchAddress("EvtInfo.PVxE"           ,&PVxE	);
-    root->SetBranchAddress("EvtInfo.PVyE"           ,&PVyE	);
-    root->SetBranchAddress("EvtInfo.PVzE"           ,&PVzE	);
-    root->SetBranchAddress("EvtInfo.PVnchi2"        ,&PVnchi2	);
-    root->SetBranchAddress("EvtInfo.PVchi2"         ,&PVchi2	);
-    root->SetBranchAddress("EvtInfo.BSx"            ,&BSx	    );
-    root->SetBranchAddress("EvtInfo.BSy"            ,&BSy	    );
-    root->SetBranchAddress("EvtInfo.BSz"            ,&BSz	    );
-    root->SetBranchAddress("EvtInfo.BSxErr"         ,&BSxErr  );
-    root->SetBranchAddress("EvtInfo.BSyErr"         ,&BSyErr  );
-    root->SetBranchAddress("EvtInfo.BSzErr"         ,&BSzErr  );
-    root->SetBranchAddress("EvtInfo.BSdxdz"         ,&BSdxdz  );
-    root->SetBranchAddress("EvtInfo.BSdydz"         ,&BSdydz  );
-    root->SetBranchAddress("EvtInfo.BSdxdzErr"      ,&BSdxdzErr  );
-    root->SetBranchAddress("EvtInfo.BSdydzErr"      ,&BSdydzErr  );
-    root->SetBranchAddress("EvtInfo.BSWidthX"       ,&BSWidthX  );
-    root->SetBranchAddress("EvtInfo.BSWidthXErr"    ,&BSWidthXErr  );
-    root->SetBranchAddress("EvtInfo.BSWidthY"       ,&BSWidthY  );
-    root->SetBranchAddress("EvtInfo.BSWidthYErr"    ,&BSWidthYErr  );
-    //root->SetBranchAddress("EvtInfo.PVc2p"    ,&PVc2p	);
-  } 
-};
-
-class VtxInfoBranches { 
+class VtxInfoBranches { //{{{
 	public:
 		int     Size;
 		int     isValid[MAX_Vertices];
@@ -263,7 +256,7 @@ class VtxInfoBranches {
 		float   y[MAX_Vertices];
 		float   z[MAX_Vertices];
 
-		void regTree(TTree *root) {
+		void regTree(TTree *root) { //{{{
 			root->Branch("VtxInfo.Size"	    , &Size	       , "VtxInfo.Size/I"	    );
 			root->Branch("VtxInfo.isValid"  , &isValid[0]      , "VtxInfo.isValid[VtxInfo.Size]/I"	    );
 			root->Branch("VtxInfo.isFake"   , &isFake[0]       , "VtxInfo.isFake[VtxInfo.Size]/O"	    ); 
@@ -274,9 +267,9 @@ class VtxInfoBranches {
 			root->Branch("VtxInfo.x"	    , &x[0]	       , "VtxInfo.x[VtxInfo.Size]/F"	    );
 			root->Branch("VtxInfo.y"	    , &y[0]	       , "VtxInfo.y[VtxInfo.Size]/F"	    );
 			root->Branch("VtxInfo.z"	    , &z[0]	       , "VtxInfo.z[VtxInfo.Size]/F"	    );
-		} 
+		} //}}}
 	    
-		void setbranchadd(TTree *root) { 
+		void setbranchadd(TTree *root) { //{{{
 			root->SetBranchAddress("VtxInfo.Size"        , &Size  	 );
 			root->SetBranchAddress("VtxInfo.isValid"     , &isValid[0]  	 );
 			root->SetBranchAddress("VtxInfo.isFake"      , &isFake[0]  	 );
@@ -287,10 +280,10 @@ class VtxInfoBranches {
 			root->SetBranchAddress("VtxInfo.x"        , &x[0]  	 );
 			root->SetBranchAddress("VtxInfo.y"        , &y[0]  	 );
 			root->SetBranchAddress("VtxInfo.z"        , &z[0]  	 );
-		}
-};
+		} //}}}		    
+};//}}}
 
- class MuonInfoBranches{
+ class MuonInfoBranches{//{{{
     public:
         int	    size;
         int     index        [ MAX_MUON];
@@ -365,7 +358,7 @@ class VtxInfoBranches {
         float   MuTrgMatchFilterTrgObjEta [MAX_MUON*MAX_TRIGGER];
         float   MuTrgMatchFilterTrgObjPhi [MAX_MUON*MAX_TRIGGER];
 
-        void regTree(TTree *root, bool detailMode = false, int PathSize = 20, int FilterSize = 20){
+        void regTree(TTree *root, bool detailMode = false, int PathSize = 20, int FilterSize = 20){//{{{
             root->Branch("MuonInfo.size"          , &size         , "MuonInfo.size/I"			);
             root->Branch("MuonInfo.index"         , index         , "MuonInfo.index[MuonInfo.size]/I"	);
             root->Branch("MuonInfo.handle_index"  , handle_index  , "MuonInfo.handle_index[MuonInfo.size]/I"	);
@@ -442,9 +435,9 @@ class VtxInfoBranches {
                 root->Branch("MuonInfo.innerTrackisNonnull" ,innerTrackisNonnull, "MuonInfo.innerTrackisNonnull[MuonInfo.size]/O");
                 root->Branch("MuonInfo.globalTrackisNonnull" ,globalTrackisNonnull, "MuonInfo.globalTrackisNonnull[MuonInfo.size]/O");
             }
-        }
+        }//}}}
 
-        void setbranchadd(TTree *root, bool detailMode = false){
+        void setbranchadd(TTree *root, bool detailMode = false){//{{{
             root->SetBranchAddress("MuonInfo.size"          , &size          );
             root->SetBranchAddress("MuonInfo.index"         , index          );
             root->SetBranchAddress("MuonInfo.handle_index"  , handle_index          );
@@ -521,10 +514,10 @@ class VtxInfoBranches {
                 root->SetBranchAddress("MuonInfo.innerTrackisNonnull"    , innerTrackisNonnull);
                 root->SetBranchAddress("MuonInfo.globalTrackisNonnull"    , globalTrackisNonnull);
             }
-        }
-};
+        }//}}}
+};//}}}
 
-class TrackInfoBranches{
+class TrackInfoBranches{//{{{
     public:
         int     size;
         int     index        [ MAX_TRACK];
@@ -541,8 +534,8 @@ class TrackInfoBranches{
         int     pixelhit     [ MAX_TRACK];
         int     nStripLayer  [ MAX_TRACK];
         int     nPixelLayer  [ MAX_TRACK];
-        int     fpbarrelhit  [ MAX_TRACK];
-        int     fpendcaphit  [ MAX_TRACK];
+        int	    fpbarrelhit  [ MAX_TRACK];
+        int	    fpendcaphit  [ MAX_TRACK];
         float	chi2         [ MAX_TRACK];
         float	ndf          [ MAX_TRACK];
         float	d0           [ MAX_TRACK];
@@ -563,7 +556,7 @@ class TrackInfoBranches{
         int   originalTrkAlgo[ MAX_TRACK];
         float   dedx         [ MAX_TRACK];
 
-        void regTree(TTree *root, bool detailMode = false){
+        void regTree(TTree *root, bool detailMode = false){//{{{
             root->Branch("TrackInfo.size"           ,&size		    ,"TrackInfo.size/I"			);
             root->Branch("TrackInfo.index"          ,index          ,"TrackInfo.index[TrackInfo.size]/I"	);
             root->Branch("TrackInfo.handle_index"   ,handle_index   ,"TrackInfo.handle_index[TrackInfo.size]/I"	);
@@ -602,9 +595,9 @@ class TrackInfoBranches{
 
             if(detailMode){
             }
-        }
+        }//}}}
 
-        void setbranchadd(TTree *root, bool detailMode = false){
+        void setbranchadd(TTree *root, bool detailMode = false){//{{{
             root->SetBranchAddress("TrackInfo.size"          , &size       );
             root->SetBranchAddress("TrackInfo.index"         , index       );
             root->SetBranchAddress("TrackInfo.handle_index"  , handle_index       );
@@ -643,10 +636,10 @@ class TrackInfoBranches{
 
             if(detailMode){
             }
-        }
-};
+        }//}}}
+};//}}}
 
-class BInfoBranches{
+class BInfoBranches{//{{{
 public:
     int	   uj_size;
     int	   uj_index[MAX_XB];
@@ -754,7 +747,7 @@ public:
     float  tktk_rftk2_eta[MAX_XB];
     float  tktk_rftk2_phi[MAX_XB];
     
-    void regTree(TTree *root, bool detailMode = false){
+    void regTree(TTree *root, bool detailMode = false){//{{{
         root->Branch("BInfo.uj_size"          , &uj_size       , "BInfo.uj_size/I"			);
         root->Branch("BInfo.uj_index"         , uj_index       , "BInfo.uj_index[BInfo.uj_size]/I"	);
         root->Branch("BInfo.uj_mass"          , uj_mass        , "BInfo.uj_mass[BInfo.uj_size]/F"	);
@@ -866,9 +859,9 @@ public:
             root->Branch("BInfo.tktk_rftk2_eta"   , tktk_rftk2_eta , "BInfo.tktk_rftk2_eta[BInfo.size]/F"     );
             root->Branch("BInfo.tktk_rftk2_phi"   , tktk_rftk2_phi , "BInfo.tktk_rftk2_phi[BInfo.size]/F"     );
         }
-    }
+    }//}}}
     
-    void setbranchadd(TTree *root, bool detailMode = false){
+    void setbranchadd(TTree *root, bool detailMode = false){//{{{
         root->SetBranchAddress("BInfo.uj_size"		   ,&uj_size	);
         root->SetBranchAddress("BInfo.uj_size"		   ,&uj_size	    );
         root->SetBranchAddress("BInfo.uj_index"        ,uj_index   );
@@ -981,10 +974,10 @@ public:
             root->SetBranchAddress("BInfo.tktk_rftk2_eta"    ,tktk_rftk2_eta   	);
             root->SetBranchAddress("BInfo.tktk_rftk2_phi"    ,tktk_rftk2_phi  	);
         }
-    }
-};
+    }//}}}
+};//}}}
 
-class DInfoBranches{
+class DInfoBranches{//{{{
 public:
     int	   size;
     int	   index[MAX_XB];
@@ -1011,8 +1004,8 @@ public:
     float  tktkRes_svpvDisErr[MAX_XB];
     float  tktkRes_svpvDistanceToSV[MAX_XB];
     float  tktkRes_svpvDisErrToSV[MAX_XB];
-    float  tktkRes_alpha[MAX_XB];
-    float  tktkRes_alphaToSV[MAX_XB];
+	float  tktkRes_alpha[MAX_XB];
+	float  tktkRes_alphaToSV[MAX_XB];
     float  tktkRes_rftk1_mass[MAX_XB];
     float  tktkRes_rftk1_pt[MAX_XB];
     float  tktkRes_rftk1_eta[MAX_XB];
@@ -1096,7 +1089,7 @@ public:
     float  rftk5_MassHypo[MAX_XB];
     bool   isSequentialFit[MAX_XB];
    
-    void regTree(TTree *root, bool detailMode = false){
+    void regTree(TTree *root, bool detailMode = false){//{{{
         root->Branch("DInfo.size"             , &size          , "DInfo.size/I"			);
         root->Branch("DInfo.index"            , index          , "DInfo.index[DInfo.size]/I"		);
         root->Branch("DInfo.type"             , type           , "DInfo.type[DInfo.size]/I"	);
@@ -1122,8 +1115,8 @@ public:
         root->Branch("DInfo.tktkRes_svpvDisErr"        , tktkRes_svpvDisErr        , "DInfo.tktkRes_svpvDisErr[DInfo.size]/F"	);
         root->Branch("DInfo.tktkRes_svpvDistanceToSV"  , tktkRes_svpvDistanceToSV  , "DInfo.tktkRes_svpvDistanceToSV[DInfo.size]/F"	);
         root->Branch("DInfo.tktkRes_svpvDisErrToSV"    , tktkRes_svpvDisErrToSV    , "DInfo.tktkRes_svpvDisErrToSV[DInfo.size]/F"	);
-	root->Branch("DInfo.tktkRes_alpha"             , tktkRes_alpha             , "DInfo.tktkRes_alpha[DInfo.size]/F" );
-	root->Branch("DInfo.tktkRes_alphaToSV"         , tktkRes_alphaToSV         , "DInfo.tktkRes_alphaToSV[DInfo.size]/F" );
+		root->Branch("DInfo.tktkRes_alpha"             , tktkRes_alpha             , "DInfo.tktkRes_alpha[DInfo.size]/F" );
+		root->Branch("DInfo.tktkRes_alphaToSV"         , tktkRes_alphaToSV         , "DInfo.tktkRes_alphaToSV[DInfo.size]/F" );
         root->Branch("DInfo.tktkRes_rftk1_index"       , tktkRes_rftk1_index       , "DInfo.tktkRes_rftk1_index[DInfo.size]/I");
         root->Branch("DInfo.tktkRes_rftk2_index"       , tktkRes_rftk2_index       , "DInfo.tktkRes_rftk2_index[DInfo.size]/I");
         root->Branch("DInfo.tktkRes_rftk3_index"       , tktkRes_rftk3_index       , "DInfo.tktkRes_rftk3_index[DInfo.size]/I");
@@ -1212,9 +1205,9 @@ public:
             root->Branch("DInfo.rftk5_phi"        , rftk5_phi         , "DInfo.rftk5_phi[DInfo.size]/F"    );
             root->Branch("DInfo.rftk5_mass"       , rftk5_mass        , "DInfo.rftk5_mass[DInfo.size]/F"   );
         }
-    }
+    }//}}}
     
-    void setbranchadd(TTree *root, bool detailMode = false){
+    void setbranchadd(TTree *root, bool detailMode = false){//{{{
         root->SetBranchAddress("DInfo.size"            ,&size        );
         root->SetBranchAddress("DInfo.index"           ,index       	);
         root->SetBranchAddress("DInfo.type"            ,type   	);
@@ -1240,8 +1233,8 @@ public:
         root->SetBranchAddress("DInfo.tktkRes_svpvDisErr"      ,tktkRes_svpvDisErr   	);
         root->SetBranchAddress("DInfo.tktkRes_svpvDistanceToSV",tktkRes_svpvDistanceToSV);
         root->SetBranchAddress("DInfo.tktkRes_svpvDisErrToSV"  ,tktkRes_svpvDisErrToSV	);
-	root->SetBranchAddress("DInfo.tktkRes_alpha"           ,tktkRes_alpha    );
-	root->SetBranchAddress("DInfo.tktkRes_alphaToSV"       ,tktkRes_alphaToSV    );
+		root->SetBranchAddress("DInfo.tktkRes_alpha"           ,tktkRes_alpha    );
+		root->SetBranchAddress("DInfo.tktkRes_alphaToSV"       ,tktkRes_alphaToSV    );
 
         root->SetBranchAddress("DInfo.tktkRes_rftk1_index"     ,tktkRes_rftk1_index   	);
         root->SetBranchAddress("DInfo.tktkRes_rftk2_index"     ,tktkRes_rftk2_index   	);
@@ -1289,7 +1282,6 @@ public:
         root->SetBranchAddress("DInfo.rftk3_MassHypo"     ,rftk3_MassHypo   	);
         root->SetBranchAddress("DInfo.rftk4_MassHypo"     ,rftk4_MassHypo   	);
         root->SetBranchAddress("DInfo.rftk5_MassHypo"     ,rftk5_MassHypo   	);
-
         root->SetBranchAddress("DInfo.isSequentialFit"    ,isSequentialFit     );
 
         if(detailMode){
@@ -1333,89 +1325,89 @@ public:
             root->SetBranchAddress("DInfo.tktkRes_rftk4_mass"      ,tktkRes_rftk4_mass  );
     
         }
-    }
-};
+    }//}}}
+};//}}}
 
-class GenInfoBranches{
- public:
-  float   genPVx;
-  float   genPVy;
-  float   genPVz;
-  int     size;
-  int     index       [MAX_GEN];
-  int     handle_index[MAX_GEN];
-  float  pt          [MAX_GEN];
-  float  eta         [MAX_GEN];
-  float  phi         [MAX_GEN];
-  float  mass        [MAX_GEN];
-  int     pdgId       [MAX_GEN];
-  int     status      [MAX_GEN];
-  int     collisionId [MAX_GEN];//to tell if it is from pythia event or hydjet event
-  int     nMo         [MAX_GEN];
-  int     nDa         [MAX_GEN];
-  int     mo1         [MAX_GEN];
-  int     mo2         [MAX_GEN];
-  int     da1         [MAX_GEN];
-  int     da2         [MAX_GEN];
-  int     da3         [MAX_GEN];
-  int     da4         [MAX_GEN];
-  float  vtxX         [MAX_GEN];//production vertex of the particle
-  float  vtxY         [MAX_GEN];
-  float  vtxZ         [MAX_GEN];
-  
-  void regTree(TTree *root){//{{{
-    root->Branch("GenInfo.genPVx"       ,&genPVx        ,"GenInfo.genPVx/F");
-    root->Branch("GenInfo.genPVy"       ,&genPVy        ,"GenInfo.genPVy/F");
-    root->Branch("GenInfo.genPVz"       ,&genPVz        ,"GenInfo.genPVz/F");
-    root->Branch("GenInfo.size"         ,&size          ,"GenInfo.size/I");
-    root->Branch("GenInfo.index"        ,index          ,"GenInfo.index[GenInfo.size]/I");
-    root->Branch("GenInfo.handle_index" ,handle_index   ,"GenInfo.handle_index[GenInfo.size]/I");
-    root->Branch("GenInfo.pt"           ,pt             ,"GenInfo.pt[GenInfo.size]/F");
-    root->Branch("GenInfo.eta"          ,eta            ,"GenInfo.eta[GenInfo.size]/F");
-    root->Branch("GenInfo.phi"          ,phi            ,"GenInfo.phi[GenInfo.size]/F");
-    root->Branch("GenInfo.mass"         ,mass           ,"GenInfo.mass[GenInfo.size]/F");
-    root->Branch("GenInfo.pdgId"        ,pdgId          ,"GenInfo.pdgId[GenInfo.size]/I");
-    root->Branch("GenInfo.status"       ,status         ,"GenInfo.status[GenInfo.size]/I");
-    root->Branch("GenInfo.collisionId"  ,collisionId    ,"GenInfo.collisionId[GenInfo.size]/I");
-    root->Branch("GenInfo.nMo"          ,nMo            ,"GenInfo.nMo[GenInfo.size]/I");
-    root->Branch("GenInfo.nDa"          ,nDa            ,"GenInfo.nDa[GenInfo.size]/I");
-    root->Branch("GenInfo.mo1"          ,mo1            ,"GenInfo.mo1[GenInfo.size]/I");
-    root->Branch("GenInfo.mo2"          ,mo2            ,"GenInfo.mo2[GenInfo.size]/I");
-    root->Branch("GenInfo.da1"          ,da1            ,"GenInfo.da1[GenInfo.size]/I");
-    root->Branch("GenInfo.da2"          ,da2            ,"GenInfo.da2[GenInfo.size]/I");
-    root->Branch("GenInfo.da3"          ,da3            ,"GenInfo.da3[GenInfo.size]/I");
-    root->Branch("GenInfo.da4"          ,da4            ,"GenInfo.da4[GenInfo.size]/I");
-    root->Branch("GenInfo.vtxX"         ,vtxX           ,"GenInfo.vtxX[GenInfo.size]/F");
-    root->Branch("GenInfo.vtxY"         ,vtxY           ,"GenInfo.vtxY[GenInfo.size]/F");
-    root->Branch("GenInfo.vtxZ"         ,vtxZ           ,"GenInfo.vtxZ[GenInfo.size]/F");
-    }
+class GenInfoBranches{//{{{
+    public:
+        float   genPVx;
+	float   genPVy;
+	float   genPVz;
+        int     size;
+        int     index       [MAX_GEN];
+        int     handle_index[MAX_GEN];
+        float  pt          [MAX_GEN];
+        float  eta         [MAX_GEN];
+        float  phi         [MAX_GEN];
+        float  mass        [MAX_GEN];
+        int     pdgId       [MAX_GEN];
+        int     status      [MAX_GEN];
+		int     collisionId [MAX_GEN];//to tell if it is from pythia event or hydjet event
+        int     nMo         [MAX_GEN];
+        int     nDa         [MAX_GEN];
+        int     mo1         [MAX_GEN];
+        int     mo2         [MAX_GEN];
+        int     da1         [MAX_GEN];
+        int     da2         [MAX_GEN];
+        int     da3         [MAX_GEN];
+        int     da4         [MAX_GEN];
+	float  vtxX         [MAX_GEN];//production vertex of the particle
+	float  vtxY         [MAX_GEN];
+	float  vtxZ         [MAX_GEN];
 
-  void setbranchadd(TTree *root){//{{{
-    root->SetBranchAddress("GenInfo.genPVx"       ,&genPVx        );
-    root->SetBranchAddress("GenInfo.genPVy"       ,&genPVy        );
-    root->SetBranchAddress("GenInfo.genPVz"       ,&genPVz        );
-    root->SetBranchAddress("GenInfo.size"         ,&size          );
-    root->SetBranchAddress("GenInfo.index"        ,index          );
-    root->SetBranchAddress("GenInfo.handle_index" ,handle_index   );
-    root->SetBranchAddress("GenInfo.pt"           ,pt             );
-    root->SetBranchAddress("GenInfo.eta"          ,eta            );
-    root->SetBranchAddress("GenInfo.phi"          ,phi            );
-    root->SetBranchAddress("GenInfo.mass"         ,mass           );
-    root->SetBranchAddress("GenInfo.pdgId"        ,pdgId          );
-    root->SetBranchAddress("GenInfo.status"       ,status         );
-    root->SetBranchAddress("GenInfo.collisionId"  ,collisionId    );
-    root->SetBranchAddress("GenInfo.nMo"          ,nMo            );
-    root->SetBranchAddress("GenInfo.nDa"          ,nDa            );
-    root->SetBranchAddress("GenInfo.mo1"          ,mo1            );
-    root->SetBranchAddress("GenInfo.mo2"          ,mo2            );
-    root->SetBranchAddress("GenInfo.da1"          ,da1            );
-    root->SetBranchAddress("GenInfo.da2"          ,da2            );
-    root->SetBranchAddress("GenInfo.da3"          ,da3            );
-    root->SetBranchAddress("GenInfo.da4"          ,da4            );
-    root->SetBranchAddress("GenInfo.vtxX"         ,vtxX           );
-    root->SetBranchAddress("GenInfo.vtxY"         ,vtxY           );
-    root->SetBranchAddress("GenInfo.vtxZ"         ,vtxZ           );
-  }
-  };
+        void regTree(TTree *root){//{{{
+	    root->Branch("GenInfo.genPVx"       ,&genPVx        ,"GenInfo.genPVx/F");
+	    root->Branch("GenInfo.genPVy"       ,&genPVy        ,"GenInfo.genPVy/F");
+	    root->Branch("GenInfo.genPVz"       ,&genPVz        ,"GenInfo.genPVz/F");
+            root->Branch("GenInfo.size"         ,&size          ,"GenInfo.size/I");
+            root->Branch("GenInfo.index"        ,index          ,"GenInfo.index[GenInfo.size]/I");
+            root->Branch("GenInfo.handle_index" ,handle_index   ,"GenInfo.handle_index[GenInfo.size]/I");
+            root->Branch("GenInfo.pt"           ,pt             ,"GenInfo.pt[GenInfo.size]/F");
+            root->Branch("GenInfo.eta"          ,eta            ,"GenInfo.eta[GenInfo.size]/F");
+            root->Branch("GenInfo.phi"          ,phi            ,"GenInfo.phi[GenInfo.size]/F");
+            root->Branch("GenInfo.mass"         ,mass           ,"GenInfo.mass[GenInfo.size]/F");
+            root->Branch("GenInfo.pdgId"        ,pdgId          ,"GenInfo.pdgId[GenInfo.size]/I");
+            root->Branch("GenInfo.status"       ,status         ,"GenInfo.status[GenInfo.size]/I");
+            root->Branch("GenInfo.collisionId"  ,collisionId    ,"GenInfo.collisionId[GenInfo.size]/I");
+            root->Branch("GenInfo.nMo"          ,nMo            ,"GenInfo.nMo[GenInfo.size]/I");
+            root->Branch("GenInfo.nDa"          ,nDa            ,"GenInfo.nDa[GenInfo.size]/I");
+            root->Branch("GenInfo.mo1"          ,mo1            ,"GenInfo.mo1[GenInfo.size]/I");
+            root->Branch("GenInfo.mo2"          ,mo2            ,"GenInfo.mo2[GenInfo.size]/I");
+            root->Branch("GenInfo.da1"          ,da1            ,"GenInfo.da1[GenInfo.size]/I");
+            root->Branch("GenInfo.da2"          ,da2            ,"GenInfo.da2[GenInfo.size]/I");
+            root->Branch("GenInfo.da3"          ,da3            ,"GenInfo.da3[GenInfo.size]/I");
+            root->Branch("GenInfo.da4"          ,da4            ,"GenInfo.da4[GenInfo.size]/I");
+	    root->Branch("GenInfo.vtxX"         ,vtxX           ,"GenInfo.vtxX[GenInfo.size]/F");
+	    root->Branch("GenInfo.vtxY"         ,vtxY           ,"GenInfo.vtxY[GenInfo.size]/F");
+	    root->Branch("GenInfo.vtxZ"         ,vtxZ           ,"GenInfo.vtxZ[GenInfo.size]/F");
+        }//}}}
+
+        void setbranchadd(TTree *root){//{{{
+	    root->SetBranchAddress("GenInfo.genPVx"       ,&genPVx        );
+	    root->SetBranchAddress("GenInfo.genPVy"       ,&genPVy        );
+	    root->SetBranchAddress("GenInfo.genPVz"       ,&genPVz        );
+            root->SetBranchAddress("GenInfo.size"         ,&size          );
+            root->SetBranchAddress("GenInfo.index"        ,index          );
+            root->SetBranchAddress("GenInfo.handle_index" ,handle_index   );
+            root->SetBranchAddress("GenInfo.pt"           ,pt             );
+            root->SetBranchAddress("GenInfo.eta"          ,eta            );
+            root->SetBranchAddress("GenInfo.phi"          ,phi            );
+            root->SetBranchAddress("GenInfo.mass"         ,mass           );
+            root->SetBranchAddress("GenInfo.pdgId"        ,pdgId          );
+            root->SetBranchAddress("GenInfo.status"       ,status         );
+            root->SetBranchAddress("GenInfo.collisionId"  ,collisionId    );
+            root->SetBranchAddress("GenInfo.nMo"          ,nMo            );
+            root->SetBranchAddress("GenInfo.nDa"          ,nDa            );
+            root->SetBranchAddress("GenInfo.mo1"          ,mo1            );
+            root->SetBranchAddress("GenInfo.mo2"          ,mo2            );
+            root->SetBranchAddress("GenInfo.da1"          ,da1            );
+            root->SetBranchAddress("GenInfo.da2"          ,da2            );
+            root->SetBranchAddress("GenInfo.da3"          ,da3            );
+            root->SetBranchAddress("GenInfo.da4"          ,da4            );
+	    root->SetBranchAddress("GenInfo.vtxX"         ,vtxX           );
+	    root->SetBranchAddress("GenInfo.vtxY"         ,vtxY           );
+	    root->SetBranchAddress("GenInfo.vtxZ"         ,vtxZ           );
+        }//}}}
+};//}}}
 
 #endif

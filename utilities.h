@@ -61,6 +61,8 @@
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
 #include "DataFormats/TrackReco/interface/DeDxData.h"
+#include "DataFormats/HeavyIonEvent/interface/Centrality.h" //added by Nihar
+#include "DataFormats/HeavyIonEvent/interface/CentralityBins.h"//added by Nihar
 
 class CommonFuncts{//{{{
     public:

@@ -10,11 +10,11 @@ def finderMaker_75X(process, AddCaloMuon = False, runOnMC = True, HIFormat = Fal
 	
 	##Producing Gen list with SIM particles
 	process.genParticlePlusGEANT = cms.EDProducer("GenPlusSimParticleProducer",
-                                                      src           = cms.InputTag("g4SimHits"), # use "famosSimHits" for FAMOS
-                                                      setStatus     = cms.int32(8),             # set status = 8 for GEANT GPs
-                                                      filter        = cms.vstring("pt > 0.0"),  # just for testing (optional)
-                                                      genParticles   = cms.InputTag("genParticles") # original genParticle list
-                                              )
+	        src           = cms.InputTag("g4SimHits"), # use "famosSimHits" for FAMOS
+	        setStatus     = cms.int32(8),             # set status = 8 for GEANT GPs
+	        filter        = cms.vstring("pt > 0.0"),  # just for testing (optional) #originally 0.0 #Nihar
+		    genParticles   = cms.InputTag("genParticles") # original genParticle list
+	)
 	
 	### Setup Pat
 	process.load("PhysicsTools.PatAlgos.patSequences_cff")
@@ -39,8 +39,8 @@ def finderMaker_75X(process, AddCaloMuon = False, runOnMC = True, HIFormat = Fal
 	        label='TrackCands',                   # output collection will be 'allLayer0TrackCands', 'allLayer1TrackCands', 'selectedLayer1TrackCands'
 	        tracks=cms.InputTag(TrkLabel), # input track collection
 	    	particleType='pi+',                   # particle type (for assigning a mass)
-	        preselection='pt > 0.',              # preselection cut on candidates. Only methods of 'reco::Candidate' are available
-	        selection='pt > 0.',                 # Selection on PAT Layer 1 objects ('selectedLayer1TrackCands')
+	        preselection='pt > 0.',              # preselection cut on candidates. Only methods of 'reco::Candidate' are available #Nihar
+	        selection='pt > 0.',                 # Selection on PAT Layer 1 objects ('selectedLayer1TrackCands') #Nihar
 	    	isolation={},                         # Isolations to use ('source':deltaR; set to {} for None)
 	       	isoDeposits=[],
 	        mcAs='muon'                           # Replicate MC match as the one used for Muons
@@ -199,24 +199,24 @@ def finderMaker_75X(process, AddCaloMuon = False, runOnMC = True, HIFormat = Fal
 	)
 	### Set Dfinder option
 	process.Dfinder = cms.EDAnalyzer('Dfinder',
-                                         Dchannel = cms.vint32(
-                                                 0,#RECONSTRUCTION: K+pi- : D0bar
-                                                 0,#RECONSTRUCTION: K-pi+ : D0
-                                                 0,#RECONSTRUCTION: K-pi+pi+ : D+
-                                                 0,#RECONSTRUCTION: K+pi-pi- : D-
-                                                 0,#RECONSTRUCTION: K-pi-pi+pi+ : D0
-                                                 0,#RECONSTRUCTION: K+pi+pi-pi- : D0bar
-                                                 1,#RECONSTRUCTION: K+K-(Phi)pi+ : Ds+
-                                                 1,#RECONSTRUCTION: K+K-(Phi)pi- : Ds-
-                                                 0,#RECONSTRUCTION: D0(K-pi+)pi+ : D+*
-                                                 0,#RECONSTRUCTION: D0bar(K+pi-)pi- : D-*
-                                                 0,#RECONSTRUCTION: D0(K-pi-pi+pi+)pi+ : D+*
-                                                 0,#RECONSTRUCTION: D0bar(K+pi+pi-pi-)pi- : D-*
-                                                 0,#RECONSTRUCTION: D0bar(K+pi+)pi+ : B+
-                                                 0,#RECONSTRUCTION: D0(K-pi+)pi- : B-
-                                                 0,#RECONSTRUCTION: p+k-pi+: lambdaC+
-                                                 0,#RECONSTRUCTION: p-k+pi-: lambdaCbar-
-                                         ),
+		Dchannel 		= cms.vint32(
+	        0,#RECONSTRUCTION: K+pi- : D0bar
+	        0,#RECONSTRUCTION: K-pi+ : D0
+	        0,#RECONSTRUCTION: K-pi+pi+ : D+
+	        0,#RECONSTRUCTION: K+pi-pi- : D-
+	        0,#RECONSTRUCTION: K-pi-pi+pi+ : D0
+	        0,#RECONSTRUCTION: K+pi+pi-pi- : D0bar
+	        1,#RECONSTRUCTION: K+K-(Phi)pi+ : Ds+
+	        1,#RECONSTRUCTION: K+K-(Phi)pi- : Ds-
+	        0,#RECONSTRUCTION: D0(K-pi+)pi+ : D+*
+	        0,#RECONSTRUCTION: D0bar(K+pi-)pi- : D-*
+	        0,#RECONSTRUCTION: D0(K-pi-pi+pi+)pi+ : D+*
+	        0,#RECONSTRUCTION: D0bar(K+pi+pi-pi-)pi- : D-*
+			0,#RECONSTRUCTION: D0bar(K+pi+)pi+ : B+
+			0,#RECONSTRUCTION: D0(K-pi+)pi- : B-
+			0,#RECONSTRUCTION: p+k-pi+: lambdaC+
+			0,#RECONSTRUCTION: p-k+pi-: lambdaCbar-
+		),
         detailMode = cms.bool(False),
         dropUnusedTracks = cms.bool(True),
         HLTLabel = cms.InputTag('TriggerResults::HLT'),
@@ -228,31 +228,40 @@ def finderMaker_75X(process, AddCaloMuon = False, runOnMC = True, HIFormat = Fal
         Dedx_Token2 = cms.InputTag('dedxTruncated40'),
         PUInfoLabel = cms.InputTag("addPileupInfo"),
         BSLabel = cms.InputTag("offlineBeamSpot"),
-        PVLabel = cms.InputTag(VtxLabel),
-        tkPtCut = cms.double(1.),#before fit
+        PVLabel = cms.InputTag(VtxLabel),        
+        #centralitySrc = cms.InputTag("hiCentrality"),
+        centralityBinSrc = cms.InputTag("centralityBin","HFtowers"),
+        
+        tkPtCut = cms.double(1.0),#before fit
         tkEtaCut = cms.double(2.0),#before fit
-        dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.),
-        dPtCut = cms.vdouble(8., 8., 8., 8., 8., 8., 8., 8., 8., 8., 8., 8., 8., 8., 8., 8.),#before fit
+        centmin = cms.int32(0),
+        centmax = cms.int32(80),
+        
+        dPtCut = cms.vdouble(2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2., 2.),#before fit
         dEtaCut = cms.vdouble(1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5),#before fit, not used currently
         dRapidityCut = cms.vdouble(10., 10., 10., 10., 10., 10., 10., 10., 10., 10., 10., 10., 10., 10., 10., 10.),
-        VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+        VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05),
+        dCutSeparating_PtVal = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.),
         svpvDistanceCut_lowptD = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
         svpvDistanceCut_highptD = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
         alphaCut = cms.vdouble(999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999.),
+        #alphaCut = cms.vdouble(0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12, 0.12),
         MaxDocaCut = cms.vdouble(999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999.),
-        tktkRes_dCutSeparating_PtVal = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.),
-        tktkRes_dPtCut = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.),#before fit
+        
+        tktkRes_dPtCut = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.),#before fit #originaly 0
         tktkRes_dEtaCut = cms.vdouble(1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5),#before fit, not used currently
-        tktkRes_VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-        tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0),
-        tktkRes_svpvDistanceCut_highptD = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0),
+        tktkRes_VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05),
+        tktkRes_dCutSeparating_PtVal = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.),
+        tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.),
+        tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.),
         tktkRes_svpvDistanceToSVCut_lowptD = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
         tktkRes_svpvDistanceToSVCut_highptD = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
         tktkRes_alphaCut = cms.vdouble(999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999.),
         tktkRes_alphaToSVCut = cms.vdouble(999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999., 999.),
         ResToNonRes_PtAsym_max = cms.vdouble(1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.),
         ResToNonRes_PtAsym_min = cms.vdouble(-1., -1., -1., -1., -1., -1., -1., -1., -1., -1., -1., -1., -1., -1., -1., -1.),
-        RunOnMC = cms.bool(False),
+
+        RunOnMC = cms.bool(True),
         doTkPreCut = cms.bool(True),
         makeDntuple = cms.bool(True),
         doDntupleSkim = cms.bool(False),

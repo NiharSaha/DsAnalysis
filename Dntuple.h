@@ -1,4 +1,4 @@
-
+// vim:set ts=4 sw=4 fdm=marker et:
 using namespace std;
 
 #ifndef _DNTUPLE_H_
@@ -6,11 +6,12 @@ using namespace std;
 #include "format.h"
 
 class DntupleBranches
-{
+{//{{{
 public:
-  //Eventt Informations
+  //EvtInfo
   int     RunNo;
   int     EvtNo;
+  int     CentBin;//Nihar
   int     LumiNo;
   int     Dsize;
   float   PVx;
@@ -69,7 +70,7 @@ public:
   float   DMinTkPt[MAX_XB];
   bool    DisSequentialFit[MAX_XB];
 
-  //DInfo.trkInfo (There are four particles coming out from Ds viz pi,phi,k+,k-)
+  //DInfo.trkInfo
   float   Dtrk1Pt[MAX_XB];
   float   Dtrk2Pt[MAX_XB];
   float   Dtrk3Pt[MAX_XB];
@@ -198,7 +199,7 @@ public:
   int     Dtrk3Algo[MAX_XB];
   int     Dtrk4Algo[MAX_XB];
 
-  //DInfo.tktkResInfo
+  //DInfo.tktkResInfo [Resonance track (Phi) information]
   float   DtktkResmass[MAX_XB];
   float   DtktkRes_unfitted_mass[MAX_XB];
   float   DtktkRespt[MAX_XB];
@@ -339,21 +340,22 @@ public:
     //EvtInfo
     dnt->Branch("RunNo",&RunNo);
     dnt->Branch("EvtNo",&EvtNo);
-    dnt->Branch("LumiNo",&LumiNo);
+    dnt ->Branch("CentBin", &CentBin);
+    //dnt->Branch("LumiNo",&LumiNo);
     dnt->Branch("Dsize",&Dsize);
     dnt->Branch("PVx",&PVx);
     dnt->Branch("PVy",&PVy);
     dnt->Branch("PVz",&PVz);
     dnt->Branch("PVnchi2",&PVnchi2);
-    dnt->Branch("BSx",&BSx);
-    dnt->Branch("BSy",&BSy);
-    dnt->Branch("BSz",&BSz);
+    //dnt->Branch("BSx",&BSx);
+    //dnt->Branch("BSy",&BSy);
+    //dnt->Branch("BSz",&BSz);
     if(detailMode)
       {
-        dnt->Branch("PVxE",&PVxE);
-        dnt->Branch("PVyE",&PVyE);
+        //dnt->Branch("PVxE",&PVxE);
+        //dnt->Branch("PVyE",&PVyE);
         dnt->Branch("PVzE",&PVzE);
-        dnt->Branch("BSxErr",&BSxErr);
+        /*dnt->Branch("BSxErr",&BSxErr);
         dnt->Branch("BSyErr",&BSyErr);
         dnt->Branch("BSzErr",&BSzErr);
         dnt->Branch("BSdxdz",&BSdxdz);
@@ -363,7 +365,7 @@ public:
         dnt->Branch("BSWidthX",&BSWidthX);
         dnt->Branch("BSWidthXErr",&BSWidthXErr);
         dnt->Branch("BSWidthY",&BSWidthY);
-        dnt->Branch("BSWidthYErr",&BSWidthYErr);        
+        dnt->Branch("BSWidthYErr",&BSWidthYErr);*/        
       }
     //DInfo
     dnt->Branch("Dindex",Dindex,"Dindex[Dsize]/I");
@@ -371,10 +373,10 @@ public:
     dnt->Branch("Dmass",Dmass,"Dmass[Dsize]/F");
     dnt->Branch("D_unfitted_mass",D_unfitted_mass,"D_unfitted_mass[Dsize]/F");
     dnt->Branch("Dpt",Dpt,"Dpt[Dsize]/F");
-    dnt->Branch("D_unfitted_pt",D_unfitted_pt,"D_unfitted_pt[Dsize]/F");
+    //dnt->Branch("D_unfitted_pt",D_unfitted_pt,"D_unfitted_pt[Dsize]/F");
     dnt->Branch("Deta",Deta,"Deta[Dsize]/F");
     dnt->Branch("Dphi",Dphi,"Dphi[Dsize]/F");
-    dnt->Branch("Dy",Dy,"Dy[Dsize]/F");
+    //dnt->Branch("Dy",Dy,"Dy[Dsize]/F");
     dnt->Branch("DvtxX",DvtxX,"DvtxX[Dsize]/F");
     dnt->Branch("DvtxY",DvtxY,"DvtxY[Dsize]/F");
     dnt->Branch("DvtxZ",DvtxZ,"DvtxZ[Dsize]/F");
@@ -389,26 +391,27 @@ public:
     dnt->Branch("Dalpha",Dalpha,"Dalpha[Dsize]/F");
     dnt->Branch("DsvpvDistance",DsvpvDistance,"DsvpvDistance[Dsize]/F");
     dnt->Branch("DsvpvDisErr",DsvpvDisErr,"DsvpvDisErr[Dsize]/F");
-    dnt->Branch("DsvpvDistance_2D",DsvpvDistance_2D,"DsvpvDistance_2D[Dsize]/F");
-    dnt->Branch("DsvpvDisErr_2D",DsvpvDisErr_2D,"DsvpvDisErr_2D[Dsize]/F");
+    //dnt->Branch("DsvpvDistance_2D",DsvpvDistance_2D,"DsvpvDistance_2D[Dsize]/F");
+    //dnt->Branch("DsvpvDisErr_2D",DsvpvDisErr_2D,"DsvpvDisErr_2D[Dsize]/F");
     dnt->Branch("Ddca",Ddca,"Ddca[Dsize]/F");
-    dnt->Branch("DlxyBS",DlxyBS,"DlxyBS[Dsize]/F");
-    dnt->Branch("DlxyBSErr",DlxyBSErr,"DlxyBSErr[Dsize]/F");
+    //dnt->Branch("DlxyBS",DlxyBS,"DlxyBS[Dsize]/F");
+    /* dnt->Branch("DlxyBSErr",DlxyBSErr,"DlxyBSErr[Dsize]/F");
     dnt->Branch("DMaxDoca",DMaxDoca,"DMaxDoca[Dsize]/F");
     dnt->Branch("DMaxTkPt",DMaxTkPt,"DMaxTkPt[Dsize]/F");
     dnt->Branch("DMinTkPt",DMinTkPt,"DMinTkPt[Dsize]/F");
     dnt->Branch("DisSequentialFit",DisSequentialFit,"DisSequentialFit[Dsize]/O");
-
+    */
     //DInfo.trkInfo
     dnt->Branch("Dtrk1Pt",Dtrk1Pt,"Dtrk1Pt[Dsize]/F");
     dnt->Branch("Dtrk2Pt",Dtrk2Pt,"Dtrk2Pt[Dsize]/F");
     dnt->Branch("Dtrk1PtErr",Dtrk1PtErr,"Dtrk1PtErr[Dsize]/F");
     dnt->Branch("Dtrk2PtErr",Dtrk2PtErr,"Dtrk2PtErr[Dsize]/F");
-    dnt->Branch("Dtrk1Eta",Dtrk1Eta,"Dtrk1Eta[Dsize]/F");
-    dnt->Branch("Dtrk2Eta",Dtrk2Eta,"Dtrk2Eta[Dsize]/F");
-    dnt->Branch("Dtrk1Phi",Dtrk1Phi,"Dtrk1Phi[Dsize]/F");
-    dnt->Branch("Dtrk2Phi",Dtrk2Phi,"Dtrk2Phi[Dsize]/F");
-    dnt->Branch("Dtrk1P",Dtrk1P,"Dtrk1P[Dsize]/F");
+    //dnt->Branch("Dtrk1Eta",Dtrk1Eta,"Dtrk1Eta[Dsize]/F");
+    //dnt->Branch("Dtrk2Eta",Dtrk2Eta,"Dtrk2Eta[Dsize]/F");
+    //dnt->Branch("Dtrk1Phi",Dtrk1Phi,"Dtrk1Phi[Dsize]/F");
+    //dnt->Branch("Dtrk2Phi",Dtrk2Phi,"Dtrk2Phi[Dsize]/F");
+    //Commented by Nihar
+    /*dnt->Branch("Dtrk1P",Dtrk1P,"Dtrk1P[Dsize]/F");
     dnt->Branch("Dtrk2P",Dtrk2P,"Dtrk2P[Dsize]/F");
     dnt->Branch("Dtrk1Dz",Dtrk1Dz,"Dtrk1Dz[Dsize]/F");
     dnt->Branch("Dtrk2Dz",Dtrk2Dz,"Dtrk2Dz[Dsize]/F");
@@ -439,6 +442,7 @@ public:
     dnt->Branch("Dtrk1thetastar_uf",Dtrk1thetastar_uf,"Dtrk1thetastar_uf[Dsize]/F");
     dnt->Branch("Dtrk2thetastar_uf",Dtrk2thetastar_uf,"Dtrk2thetastar_uf[Dsize]/F");
 
+    
     dnt->Branch("Dtrk1PixelHit",Dtrk1PixelHit,"Dtrk1PixelHit[Dsize]/F");
     dnt->Branch("Dtrk2PixelHit",Dtrk2PixelHit,"Dtrk2PixelHit[Dsize]/F");
     dnt->Branch("Dtrk1StripHit",Dtrk1StripHit,"Dtrk1StripHit[Dsize]/F");
@@ -450,20 +454,21 @@ public:
     dnt->Branch("Dtrk1Chi2ndf",Dtrk1Chi2ndf,"Dtrk1Chi2ndf[Dsize]/F");
     dnt->Branch("Dtrk2Chi2ndf",Dtrk2Chi2ndf,"Dtrk2Chi2ndf[Dsize]/F");
     dnt->Branch("Dtrk1Algo",Dtrk1Algo,"Dtrk1Algo[Dsize]/I");
-    dnt->Branch("Dtrk2Algo",Dtrk2Algo,"Dtrk2Algo[Dsize]/I");
+    dnt->Branch("Dtrk2Algo",Dtrk2Algo,"Dtrk2Algo[Dsize]/I");*/
     if(!D0kpimode)
       {
         dnt->Branch("Dtrk3Pt",Dtrk3Pt,"Dtrk3Pt[Dsize]/F");
         dnt->Branch("Dtrk4Pt",Dtrk4Pt,"Dtrk4Pt[Dsize]/F");
-        dnt->Branch("Dtrk3PtErr",Dtrk3PtErr,"Dtrk3PtErr[Dsize]/F");
-        dnt->Branch("Dtrk4PtErr",Dtrk4PtErr,"Dtrk4PtErr[Dsize]/F");
-        dnt->Branch("Dtrk3Eta",Dtrk3Eta,"Dtrk3Eta[Dsize]/F");
-        dnt->Branch("Dtrk4Eta",Dtrk4Eta,"Dtrk4Eta[Dsize]/F");
-        dnt->Branch("Dtrk3Phi",Dtrk3Phi,"Dtrk3Phi[Dsize]/F");
-        dnt->Branch("Dtrk4Phi",Dtrk4Phi,"Dtrk4Phi[Dsize]/F");
-        dnt->Branch("Dtrk3P",Dtrk3P,"Dtrk3P[Dsize]/F");
-        dnt->Branch("Dtrk4P",Dtrk4P,"Dtrk4P[Dsize]/F");
-        dnt->Branch("Dtrk3MassHypo",Dtrk3MassHypo,"Dtrk3MassHypo[Dsize]/F");
+        //dnt->Branch("Dtrk3PtErr",Dtrk3PtErr,"Dtrk3PtErr[Dsize]/F");
+        //dnt->Branch("Dtrk4PtErr",Dtrk4PtErr,"Dtrk4PtErr[Dsize]/F");
+        //dnt->Branch("Dtrk3Eta",Dtrk3Eta,"Dtrk3Eta[Dsize]/F");
+        //dnt->Branch("Dtrk4Eta",Dtrk4Eta,"Dtrk4Eta[Dsize]/F");
+        //dnt->Branch("Dtrk3Phi",Dtrk3Phi,"Dtrk3Phi[Dsize]/F");
+        //dnt->Branch("Dtrk4Phi",Dtrk4Phi,"Dtrk4Phi[Dsize]/F");
+        //dnt->Branch("Dtrk3P",Dtrk3P,"Dtrk3P[Dsize]/F");
+        //dnt->Branch("Dtrk4P",Dtrk4P,"Dtrk4P[Dsize]/F");
+	//Commented by Nihar
+        /*dnt->Branch("Dtrk3MassHypo",Dtrk3MassHypo,"Dtrk3MassHypo[Dsize]/F");
         dnt->Branch("Dtrk4MassHypo",Dtrk4MassHypo,"Dtrk4MassHypo[Dsize]/F");
         dnt->Branch("Dtrk3Dz",Dtrk3Dz,"Dtrk3Dz[Dsize]/F");
         dnt->Branch("Dtrk4Dz",Dtrk4Dz,"Dtrk4Dz[Dsize]/F");
@@ -503,12 +508,13 @@ public:
         dnt->Branch("Dtrk3Chi2ndf",Dtrk3Chi2ndf,"Dtrk3Chi2ndf[Dsize]/F");
         dnt->Branch("Dtrk4Chi2ndf",Dtrk4Chi2ndf,"Dtrk4Chi2ndf[Dsize]/F");
         dnt->Branch("Dtrk3Algo",Dtrk3Algo,"Dtrk3Algo[Dsize]/I");
-        dnt->Branch("Dtrk4Algo",Dtrk4Algo,"Dtrk4Algo[Dsize]/I");
+        dnt->Branch("Dtrk4Algo",Dtrk4Algo,"Dtrk4Algo[Dsize]/I");*/
       }
     if(detailMode)
       {
-        dnt->Branch("Dtrk1Y",Dtrk1Y,"Dtrk1Y[Dsize]/F");
-        dnt->Branch("Dtrk2Y",Dtrk2Y,"Dtrk2Y[Dsize]/F");
+        //dnt->Branch("Dtrk1Y",Dtrk1Y,"Dtrk1Y[Dsize]/F");
+	//Commented by Nihar
+        /*dnt->Branch("Dtrk2Y",Dtrk2Y,"Dtrk2Y[Dsize]/F");
         dnt->Branch("Dtrk1Quality",Dtrk1Quality,"Dtrk1Quality[Dsize]/I");
         dnt->Branch("Dtrk2Quality",Dtrk2Quality,"Dtrk2Quality[Dsize]/I");
 
@@ -519,11 +525,12 @@ public:
         dnt->Branch("Dtrk1PhiErr",Dtrk1PhiErr,"Dtrk1PhiErr[Dsize]/F");
         dnt->Branch("Dtrk2PhiErr",Dtrk2PhiErr,"Dtrk2PhiErr[Dsize]/F");
         dnt->Branch("Dtrk1MVAVal",Dtrk1MVAVal,"Dtrk1MVAVal[Dsize]/F");
-        dnt->Branch("Dtrk2MVAVal",Dtrk2MVAVal,"Dtrk2MVAVal[Dsize]/F");
+        dnt->Branch("Dtrk2MVAVal",Dtrk2MVAVal,"Dtrk2MVAVal[Dsize]/F");*/
         if(!D0kpimode)
           {
-            dnt->Branch("Dtrk3Y",Dtrk3Y,"Dtrk3Y[Dsize]/F");
-            dnt->Branch("Dtrk4Y",Dtrk4Y,"Dtrk4Y[Dsize]/F");
+            //dnt->Branch("Dtrk3Y",Dtrk3Y,"Dtrk3Y[Dsize]/F");
+            //Commented by Nihar
+	    /*dnt->Branch("Dtrk4Y",Dtrk4Y,"Dtrk4Y[Dsize]/F");
             dnt->Branch("Dtrk3Quality",Dtrk3Quality,"Dtrk3Quality[Dsize]/I");
             dnt->Branch("Dtrk4Quality",Dtrk4Quality,"Dtrk4Quality[Dsize]/I");
 
@@ -534,26 +541,27 @@ public:
             dnt->Branch("Dtrk3PhiErr",Dtrk3PhiErr,"Dtrk3PhiErr[Dsize]/F");
             dnt->Branch("Dtrk4PhiErr",Dtrk4PhiErr,"Dtrk4PhiErr[Dsize]/F");
             dnt->Branch("Dtrk3MVAVal",Dtrk3MVAVal,"Dtrk3MVAVal[Dsize]/F");
-            dnt->Branch("Dtrk4MVAVal",Dtrk4MVAVal,"Dtrk4MVAVal[Dsize]/F");
+            dnt->Branch("Dtrk4MVAVal",Dtrk4MVAVal,"Dtrk4MVAVal[Dsize]/F");*/
           }
       }
     //DInfo.tktkResInfo
     if(!D0kpimode)
       {
         dnt->Branch("DtktkResmass",DtktkResmass,"DtktkResmass[Dsize]/F");
-        dnt->Branch("DtktkRes_unfitted_mass",DtktkRes_unfitted_mass,"DtktkRes_unfitted_mass[Dsize]/F");
+	//Commented by Nihar
+        //dnt->Branch("DtktkRes_unfitted_mass",DtktkRes_unfitted_mass,"DtktkRes_unfitted_mass[Dsize]/F");
         dnt->Branch("DtktkRespt",DtktkRespt,"DtktkRespt[Dsize]/F");
         dnt->Branch("DtktkRes_unfitted_pt",DtktkRes_unfitted_pt,"DtktkRes_unfitted_pt[Dsize]/F");
-        dnt->Branch("DtktkReseta",DtktkReseta,"DtktkReseta[Dsize]/F");
-        dnt->Branch("DtktkResphi",DtktkResphi,"DtktkResphi[Dsize]/F");
+        //dnt->Branch("DtktkReseta",DtktkReseta,"DtktkReseta[Dsize]/F");
+        //dnt->Branch("DtktkResphi",DtktkResphi,"DtktkResphi[Dsize]/F");
         dnt->Branch("DtktkRes_chi2ndf",DtktkRes_chi2ndf,"DtktkRes_chi2ndf[Dsize]/F");
         dnt->Branch("DtktkRes_chi2cl",DtktkRes_chi2cl,"DtktkRes_chi2cl[Dsize]/F");
         dnt->Branch("DtktkRes_alpha",DtktkRes_alpha,"DtktkRes_alpha[Dsize]/F");
-        dnt->Branch("DtktkRes_alphaToSV",DtktkRes_alphaToSV,"DtktkRes_alphaToSV[Dsize]/F");
+        //dnt->Branch("DtktkRes_alphaToSV",DtktkRes_alphaToSV,"DtktkRes_alphaToSV[Dsize]/F");
         dnt->Branch("DtktkRes_svpvDistance",DtktkRes_svpvDistance,"DtktkRes_svpvDistance[Dsize]/F");
         dnt->Branch("DtktkRes_svpvDisErr",DtktkRes_svpvDisErr,"DtktkRes_svpvDisErr[Dsize]/F");
-        dnt->Branch("DtktkRes_svpvDistanceToSV",DtktkRes_svpvDistanceToSV,"DtktkRes_svpvDistanceToSV[Dsize]/F");
-        dnt->Branch("DtktkRes_svpvDisErrToSV",DtktkRes_svpvDisErrToSV,"DtktkRes_svpvDisErrToSV[Dsize]/F");
+        //dnt->Branch("DtktkRes_svpvDistanceToSV",DtktkRes_svpvDistanceToSV,"DtktkRes_svpvDistanceToSV[Dsize]/F");
+        /*dnt->Branch("DtktkRes_svpvDisErrToSV",DtktkRes_svpvDisErrToSV,"DtktkRes_svpvDisErrToSV[Dsize]/F");
         dnt->Branch("DtktkRes_dca",DtktkRes_dca,"DtktkRes_dca[Dsize]/F");
         dnt->Branch("DtktkRes_dcaToSV",DtktkRes_dcaToSV,"DtktkRes_dcaToSV[Dsize]/F");
         dnt->Branch("DtktkRes_lxyBS",DtktkRes_lxyBS,"DtktkRes_lxyBS[Dsize]/F");
@@ -638,13 +646,13 @@ public:
         dnt->Branch("DRestrk1thetastar_uf",DRestrk1thetastar_uf,"DRestrk1thetastar_uf[Dsize]/F");
         dnt->Branch("DRestrk2thetastar_uf",DRestrk2thetastar_uf,"DRestrk2thetastar_uf[Dsize]/F");
         dnt->Branch("DRestrk3thetastar_uf",DRestrk3thetastar_uf,"DRestrk3thetastar_uf[Dsize]/F");
-        dnt->Branch("DRestrk4thetastar_uf",DRestrk4thetastar_uf,"DRestrk4thetastar_uf[Dsize]/F");
+        dnt->Branch("DRestrk4thetastar_uf",DRestrk4thetastar_uf,"DRestrk4thetastar_uf[Dsize]/F");*/
       }
     if(detailMode)
       {
         if(!D0kpimode)
           {
-            dnt->Branch("DRestrk1Y",DRestrk1Y,"DRestrk1Y[Dsize]/F");
+            /*dnt->Branch("DRestrk1Y",DRestrk1Y,"DRestrk1Y[Dsize]/F");
             dnt->Branch("DRestrk2Y",DRestrk2Y,"DRestrk2Y[Dsize]/F");
             dnt->Branch("DRestrk3Y",DRestrk3Y,"DRestrk3Y[Dsize]/F");
             dnt->Branch("DRestrk4Y",DRestrk4Y,"DRestrk4Y[Dsize]/F");
@@ -652,10 +660,10 @@ public:
             dnt->Branch("DRestrk1Quality",DRestrk1Quality,"DRestrk1Quality[Dsize]/I");
             dnt->Branch("DRestrk2Quality",DRestrk2Quality,"DRestrk2Quality[Dsize]/I");
             dnt->Branch("DRestrk3Quality",DRestrk3Quality,"DRestrk3Quality[Dsize]/I");
-            dnt->Branch("DRestrk4Quality",DRestrk4Quality,"DRestrk4Quality[Dsize]/I");
+            dnt->Branch("DRestrk4Quality",DRestrk4Quality,"DRestrk4Quality[Dsize]/I");*/
           }
       }
-    //DInfo.genInfo
+    //DInfo.genInfo ------>Gen Infor for decay channel
     dnt->Branch("Dgen",Dgen,"Dgen[Dsize]/I");
     dnt->Branch("Dgensubchannel",Dgensubchannel,"Dgensubchannel[Dsize]/I");
     dnt->Branch("DsGen",DsGen,"DsGen[Dsize]/I");
@@ -665,9 +673,9 @@ public:
     dnt->Branch("Dgenpt",Dgenpt,"Dgenpt[Dsize]/F");
     dnt->Branch("Dgeneta",Dgeneta,"Dgeneta[Dsize]/F");
     dnt->Branch("Dgenphi",Dgenphi,"Dgenphi[Dsize]/F");
-    dnt->Branch("Dgeny",Dgeny,"Dgeny[Dsize]/F");
+    //dnt->Branch("Dgeny",Dgeny,"Dgeny[Dsize]/F");
     dnt->Branch("DgencollisionId",DgencollisionId,"DgencollisionId[Dsize]/I");
-    dnt->Branch("DgenBAncestorpt",DgenBAncestorpt,"DgenBAncestorpt[Dsize]/F");
+    //dnt->Branch("DgenBAncestorpt",DgenBAncestorpt,"DgenBAncestorpt[Dsize]/F");
     dnt->Branch("DgenBAncestorpdgId",DgenBAncestorpdgId,"DgenBAncestorpdgId[Dsize]/I");
     dnt->Branch("DgenprodvtxX",DgenprodvtxX,"DgenprodvtxX[Dsize]/F");
     dnt->Branch("DgenprodvtxY",DgenprodvtxY,"DgenprodvtxY[Dsize]/F");
@@ -675,7 +683,7 @@ public:
     dnt->Branch("DgendecayvtxX",DgendecayvtxX,"DgendecayvtxX[Dsize]/F");
     dnt->Branch("DgendecayvtxY",DgendecayvtxY,"DgendecayvtxY[Dsize]/F");
     dnt->Branch("DgendecayvtxZ",DgendecayvtxZ,"DgendecayvtxZ[Dsize]/F");
-    dnt->Branch("DgenfromgenPV",DgenfromgenPV,"DgenfromgenPV[Dsize]/I");
+    //dnt->Branch("DgenfromgenPV",DgenfromgenPV,"DgenfromgenPV[Dsize]/I");
   }
   
   //GenInfo
@@ -767,11 +775,11 @@ public:
 
   void buildGenBranch(TTree* nt)
   {
-    nt->Branch("GPVx",&GPVx);
-    nt->Branch("GPVy",&GPVy);
+    //nt->Branch("GPVx",&GPVx);
+    //nt->Branch("GPVy",&GPVy);
     nt->Branch("GPVz",&GPVz);
     nt->Branch("Gsize",&Gsize);
-    nt->Branch("Gy",Gy,"Gy[Gsize]/F");
+    //nt->Branch("Gy",Gy,"Gy[Gsize]/F");
     nt->Branch("Geta",Geta,"Geta[Gsize]/F");
     nt->Branch("Gphi",Gphi,"Gphi[Gsize]/F");
     nt->Branch("Gpt",Gpt,"Gpt[Gsize]/F");
@@ -780,19 +788,19 @@ public:
     nt->Branch("GcollisionId",GcollisionId,"GcollisionId[Gsize]/I");
     nt->Branch("GisSignal",GisSignal,"GisSignal[Gsize]/I");
     nt->Branch("GSignalType",GSignalType,"GSignalType[Gsize]/I");
-    nt->Branch("GBAncestorpt",GBAncestorpt,"GBAncestorpt[Gsize]/F");
-    nt->Branch("GBAncestorpdgId",GBAncestorpdgId,"GBAncestorpdgId[Gsize]/I");
+    //nt->Branch("GBAncestorpt",GBAncestorpt,"GBAncestorpt[Gsize]/F");
+    //nt->Branch("GBAncestorpdgId",GBAncestorpdgId,"GBAncestorpdgId[Gsize]/I");
     nt->Branch("GfromgenPV",GfromgenPV,"GfromgenPV[Gsize]/I");
     nt->Branch("GprodvtxX",GprodvtxX,"GprodvtxX[Gsize]/F");
     nt->Branch("GprodvtxY",GprodvtxY,"GprodvtxY[Gsize]/F");
     nt->Branch("GprodvtxZ",GprodvtxZ,"GprodvtxZ[Gsize]/F");
-    nt->Branch("GdecayvtxX",GdecayvtxX,"GdecayvtxX[Gsize]/F");
-    nt->Branch("GdecayvtxY",GdecayvtxY,"GdecayvtxY[Gsize]/F");
-    nt->Branch("GdecayvtxZ",GdecayvtxZ,"GdecayvtxZ[Gsize]/F");
+    //nt->Branch("GdecayvtxX",GdecayvtxX,"GdecayvtxX[Gsize]/F");
+    //nt->Branch("GdecayvtxY",GdecayvtxY,"GdecayvtxY[Gsize]/F");
+    //nt->Branch("GdecayvtxZ",GdecayvtxZ,"GdecayvtxZ[Gsize]/F");
     nt->Branch("Gtk1pt",Gtk1pt,"Gtk1pt[Gsize]/F");
     nt->Branch("Gtk1mass",Gtk1mass,"Gtk1mass[Gsize]/F");
     nt->Branch("Gtk1eta",Gtk1eta,"Gtk1eta[Gsize]/F");
-    nt->Branch("Gtk1y",Gtk1y,"Gtk1y[Gsize]/F");
+    //nt->Branch("Gtk1y",Gtk1y,"Gtk1y[Gsize]/F");
     nt->Branch("Gtk1phi",Gtk1phi,"Gtk1phi[Gsize]/F");
     nt->Branch("Gtk1pdgId",Gtk1pdgId,"Gtk1pdgId[Gsize]/I");
 
@@ -803,7 +811,7 @@ public:
     nt->Branch("Gtk2phi",Gtk2phi,"Gtk2phi[Gsize]/F");
     nt->Branch("Gtk2pdgId",Gtk2pdgId,"Gtk2pdgId[Gsize]/I");
 
-    nt->Branch("Gtk3pt",Gtk3pt,"Gtk3pt[Gsize]/F");
+    /*nt->Branch("Gtk3pt",Gtk3pt,"Gtk3pt[Gsize]/F");
     nt->Branch("Gtk3eta",Gtk3eta,"Gtk3eta[Gsize]/F");
     nt->Branch("Gtk3y",Gtk3y,"Gtk3y[Gsize]/F");
     nt->Branch("Gtk3phi",Gtk3phi,"Gtk3phi[Gsize]/F");
@@ -811,11 +819,11 @@ public:
     nt->Branch("Gtk4pt",Gtk4pt,"Gtk4pt[Gsize]/F");
     nt->Branch("Gtk4eta",Gtk4eta,"Gtk4eta[Gsize]/F");
     nt->Branch("Gtk4y",Gtk4y,"Gtk4y[Gsize]/F");
-    nt->Branch("Gtk4phi",Gtk4phi,"Gtk4phi[Gsize]/F");
+    nt->Branch("Gtk4phi",Gtk4phi,"Gtk4phi[Gsize]/F");*/
     nt->Branch("GRestk1pt",GRestk1pt,"GRestk1pt[Gsize]/F");
     nt->Branch("GRestk1eta",GRestk1eta,"GRestk1eta[Gsize]/F");
-    nt->Branch("GRestk1y",GRestk1y,"GRestk1y[Gsize]/F");
-    nt->Branch("GRestk1phi",GRestk1phi,"GRestk1phi[Gsize]/F");
+    //nt->Branch("GRestk1y",GRestk1y,"GRestk1y[Gsize]/F");
+    //nt->Branch("GRestk1phi",GRestk1phi,"GRestk1phi[Gsize]/F");
     nt->Branch("GRestk1pdgId",GRestk1pdgId,"GRestk1pdgId[Gsize]/I");
   
     nt->Branch("GRestk2pt",GRestk2pt,"GRestk2pt[Gsize]/F");
@@ -824,7 +832,7 @@ public:
     nt->Branch("GRestk2phi",GRestk2phi,"GRestk2phi[Gsize]/F");
     nt->Branch("GRestk2pdgId",GRestk2pdgId,"GRestk2pdgId[Gsize]/I");
 
-    nt->Branch("GRestk3pt",GRestk3pt,"GRestk3pt[Gsize]/F");
+    /*nt->Branch("GRestk3pt",GRestk3pt,"GRestk3pt[Gsize]/F");
     nt->Branch("GRestk3eta",GRestk3eta,"GRestk3eta[Gsize]/F");
     nt->Branch("GRestk3y",GRestk3y,"GRestk3y[Gsize]/F");
     nt->Branch("GRestk3phi",GRestk3phi,"GRestk3phi[Gsize]/F");
@@ -832,7 +840,7 @@ public:
     nt->Branch("GRestk4eta",GRestk4eta,"GRestk4eta[Gsize]/F");
     nt->Branch("GRestk4y",GRestk4y,"GRestk4y[Gsize]/F");
     nt->Branch("GRestk4phi",GRestk4phi,"GRestk4phi[Gsize]/F");
-    nt->Branch("GnDa",GnDa,"GnDa[Gsize]/I");
+    nt->Branch("GnDa",GnDa,"GnDa[Gsize]/I");*/
     nt->Branch("Gdau1pdgId",Gdau1pdgId,"Gdau1pdgId[Gsize]/I");
     nt->Branch("Gdau2pdgId",Gdau2pdgId,"Gdau2pdgId[Gsize]/I");
     nt->Branch("Gdau3pdgId",Gdau3pdgId,"Gdau3pdgId[Gsize]/I");
@@ -855,13 +863,13 @@ public:
     nt->Branch("Gdau4phi",Gdau4phi,"Gdau4phi[Gsize]/F");
     //# later,  add Gtk pdgID , save intermediate state
 
-    }
+  }
   
   //{{{ makeDNtuple
   //void makeDNtuple(int isDchannel[], int Dtypesize[], bool REAL, bool fillZeroCandEvt, bool skim, EvtInfoBranches *EvtInfo, VtxInfoBranches *VtxInfo, TrackInfoBranches *TrackInfo, DInfoBranches *DInfo, GenInfoBranches *GenInfo, TTree* ntD1, TTree* ntD2, TTree* ntD3, TTree* ntD4, TTree* ntD5, TTree* ntD6, TTree* ntD7, TTree* ntD8)
- 
   void makeDNtuple(int isDchannel[], int Dtypesize[], bool REAL, bool fillZeroCandEvt, bool skim, EvtInfoBranches *EvtInfo, VtxInfoBranches *VtxInfo, TrackInfoBranches *TrackInfo, DInfoBranches *DInfo, GenInfoBranches *GenInfo, TTree* ntD4)
- {
+
+  {
     TVector3* bP = new TVector3;
     TVector3* bVtx = new TVector3;
     TLorentzVector* b4P = new TLorentzVector;
@@ -869,7 +877,6 @@ public:
     TVector3* D3Vec = new TVector3();
     fillTreeEvt(EvtInfo);
     bool zeroCand = true;
-    
     for(int t=0;t<16;t++)
       {
         if(t%2==0)
@@ -914,7 +921,7 @@ public:
                 //if(t==1)       ntD1->Fill();
                 //else if(t==3)  ntD2->Fill();
                 //else if(t==5)  ntD3->Fill();
-                if(t==7)  ntD4->Fill();
+		if(t==7)  ntD4->Fill();
                 //else if(t==9)  ntD5->Fill();
                 //else if(t==11) ntD6->Fill();
                 //else if(t==13) ntD7->Fill();
@@ -923,7 +930,7 @@ public:
           }
       }
 
-  }
+  }//}}}
   
   void fillDGenTree(TTree* ntGen, GenInfoBranches *GenInfo, bool gskim=true)
   {
@@ -1219,6 +1226,7 @@ public:
     //Event Info
     RunNo = EvtInfo->RunNo;
     EvtNo = EvtInfo->EvtNo;
+    CentBin = EvtInfo->CentBin;//Nihar
     LumiNo = EvtInfo->LumiNo;
     PVx = EvtInfo->PVx;
     PVy = EvtInfo->PVy;
